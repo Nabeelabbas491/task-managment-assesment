@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="w-50 mt-4">
+      <div class="d-flex justify-content-between">
+        <div class="form-group">
+          <select class="form-select form-select-lg mb-3" [(ngModel)]="dropdown" (change)="filterByStatus()">
+            <option value="All">All</option>
+            <option *ngFor="let item of statusList" value="{{item}}">{{item}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input placeholder="search by title" [(ngModel)]="input" (keyup)="search()" type="text" class="form-control">
+        </div>
+      </div>
+      <table class=" table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Task</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tasks">
+            <td>{{item.id}}</td>
+            <td>{{item.title}} (<a class="anchor" [routerLink]="['/create-task']"
+                [queryParams]="{ id :item.id }">edit</a>)</td>
+            <td>{{item.description}}</td>
+            <td>{{item.status}}</td>
+            <td class="mark" (click)="item.status = 'Completed' ">
+              {{item.status  != 'Completed' ? 'Mark as complete' : ''}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-center" *ngIf="!tasks.length"> No task found. </div>
+      <div class="text-center mt-4">
+        <button class="btn btn-outline-primary" [routerLink]="['/create-task']">Create a new task</button>
+      </div>
+    </div>
+  </div>
+</div>
